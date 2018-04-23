@@ -22,7 +22,7 @@ function process_tour_payment( $entry, $form) {
 	$tour_registration_title = $entry['display_name'] . ' ' . $entry['post_title'] . ' ' . date("h:i:s:a");
 	$deposit = get_field('required_deposit_usd', $post);
 	
-	if (rgar( $entry, '10') == 'deposit'){
+	if (rgar( $entry, '10' ) == 'deposit'){
 	$post_id = wp_insert_post(
 		array(
 			'post_title'	=> $tour_registration_title,
@@ -31,21 +31,19 @@ function process_tour_payment( $entry, $form) {
 		)
 	);}
 	
-	if (rgar( $entry, '10') == 'deposit'){
+	if (rgar( $entry, '10' ) == 'deposit'){
 		set_transient( 'tour_deposit', $deposit, 60);
 		$woocommerce->cart->add_to_cart($product_id);
-	}
-	else {
-		return;
 	}
 }
 
 function calculate_tour_payment($cart_item_data, $product_id, $variation_id){
 	if ( get_transient('tour_deposit')){
-			$price = get_transient( 'tour_deposit' );
-			//delete_transient( 'tour_deposit' );
 			$product = wc_get_product( $product_id );
-			$cart_item_data['deposit'] = $price;
+			$product_price = $product->get_price();
+			$calculated_price = get_transient( 'tour_deposit' );
+			//delete_transient( 'tour_deposit' );
+			$cart_item_data['deposit'] = $product_price + $calculated_price;
 			return $cart_item_data;
 		}
     }
