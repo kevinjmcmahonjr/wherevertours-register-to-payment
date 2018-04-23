@@ -53,7 +53,7 @@ function calculate_tour_payment($cart_item_data, $product_id, $variation_id){
 			return $cart_item_data;
 		}
     }
-add_filter ('woocommere_add_cart_item_data', 'calculate_tour_payment', 10, 3 );
+add_filter ('woocommerce_add_cart_item_data', 'calculate_tour_payment', 10, 3 );
 
 function update_wc_cart_totals($cart_obj) {
 	foreach( $cart_obj->get_cart() as $key=>$value ) {
