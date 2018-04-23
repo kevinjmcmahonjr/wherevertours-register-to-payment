@@ -55,6 +55,13 @@ function calculate_tour_payment($cart_item_data, $product_id, $variation_id){
     }
 add_filter ('woocommerce_add_cart_item_data', 'calculate_tour_payment', 10, 3 );
 
+function namespace_force_individual_cart_items( $cart_item_data, $product_id ) {
+	$unique_cart_item_key = md5( microtime() . rand() );
+	$cart_item_data['unique_key'] = $unique_cart_item_key;
+	return $cart_item_data;
+}
+add_filter( 'woocommerce_add_cart_item_data', 'namespace_force_individual_cart_items', 10, 2 );
+
 function update_wc_cart_totals($cart_obj) {
 	foreach( $cart_obj->get_cart() as $key=>$value ) {
 		if (isset ($value['deposit'])) {
