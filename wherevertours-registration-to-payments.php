@@ -29,7 +29,7 @@ function process_tour_payment( $entry, $form) {
 	global $woocommerce;
 	$post = get_post( $entry['post_id']);
 	$product_id = 2906;
-	if (rgar( $entry, '10' == 'deposit')){
+	if (rgar( $entry, '10') == 'deposit'){
 		$deposit = get_field('required_deposit_usd', $post);
 		set_transient( 'tour_deposit', $deposit, 60);
 		$woocommerce->cart->add_to_cart($product_id);
