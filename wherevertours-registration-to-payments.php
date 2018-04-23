@@ -32,7 +32,7 @@ function process_tour_payment( $entry, $form) {
 function calculate_tour_payment($cart_item_data, $product_id){
 	if ( get_transient('tour_deposit')){
 			$price = get_transient( 'tour_deposit' );
-			delete_transient( 'tour_deposit' );
+			//delete_transient( 'tour_deposit' );
 			$product = wc_get_product( $product_id );
 			$cart_item_data['deposit'] = $price;
 			return $cart_item_data;
