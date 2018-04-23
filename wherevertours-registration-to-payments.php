@@ -36,7 +36,7 @@ function process_tour_payment( $entry, $form) {
 
 function calculate_tour_payment($cart_item_data, $product_id, $variation_id){
 	$calculated_price = get_transient('tour_deposit');
-	if (!($calculated_price === false)){
+	if (!($tour_deposit === false)){
 		$post_id = wp_insert_post(
 			array(
 				'post_title'	=> $tour_registration_title,
