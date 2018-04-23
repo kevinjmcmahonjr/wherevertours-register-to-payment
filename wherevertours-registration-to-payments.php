@@ -16,6 +16,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 add_action( 'gform_after_submission_1', 'process_tour_payment', 10, 2 );
 function process_tour_payment( $entry, $form) {
+	$tour_registration_title = $entry['display_name'] . ' ' $entry['post_title'] . ' ' date("h:i:s:a");
+	$post_id = wp_insert_post(
+		array(
+			'post_title'	=> $tour_registration_title,
+			'post_type'		=> 'tour_registration'
+		)
+	);
+	
 	global $woocommerce;
 	$post = get_post( $entry['post_id']);
 	$product_id = 2906;
