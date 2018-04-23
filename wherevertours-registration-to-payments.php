@@ -38,13 +38,6 @@ function process_tour_payment( $entry, $form) {
 
 function calculate_tour_payment($cart_item_data, $product_id, $variation_id){
 	$calculated_price = get_transient('tour_deposit');
-	$post_id = wp_insert_post(
-			array(
-				'post_title'	=> 'WooTest',
-				'post_content'	=> $calculated_price,
-				'post_type'		=> 'tour_registration'
-			)
-		);
 	if (!($tour_deposit === false)){
 			$product = wc_get_product( $product_id );
 			$product_price = $product->get_price();
