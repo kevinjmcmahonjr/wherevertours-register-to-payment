@@ -28,6 +28,7 @@ function process_tour_payment( $entry, $form) {
 				'post_title'	=> $tour_registration_title,
 				'post_content'	=> $deposit,
 				'post_type'		=> 'tour_registration'
+			)
 		);
 		set_transient( 'tour_deposit', $deposit, 60);
 		$woocommerce->cart->add_to_cart($product_id);
