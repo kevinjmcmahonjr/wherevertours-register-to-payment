@@ -20,7 +20,7 @@ function process_tour_payment( $entry, $form) {
 	$post_id = wp_insert_post(
 		array(
 			'post_title'	=> $tour_registration_title,
-			'post_content'	=> $entry,
+			'post_content'	=> $tour_registration_title,
 			'post_type'		=> 'tour_registration'
 		)
 	);
