@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 add_action( 'gform_after_submission_1', 'process_tour_payment', 10, 2 );
 function process_tour_payment( $entry, $form) {
 	global $woocommerce;
-	$post = get_post( $entry['post_id'];
+	$post = get_post( $entry['post_id']);
 	$product_id = 2906;
 	if (rgar( $entry, '10' == 'deposit')){
 		$deposit = get_field('required_deposit_usd', $post);
@@ -48,6 +48,6 @@ function update_wc_cart_totals($cart_obj) {
 		}
 	}
 }
-add_action( 'woocommerce_before_calculate_totals', 'update_wc_cart_totals' 10, 1 );
+add_action( 'woocommerce_before_calculate_totals', 'update_wc_cart_totals', 10, 1 );
 
 ?>
