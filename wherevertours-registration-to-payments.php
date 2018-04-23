@@ -27,7 +27,7 @@ function process_tour_payment( $entry, $form) {
 		$post_id = wp_insert_post(
 			array(
 				'post_title'	=> $tour_registration_title,
-				'post_content'	=> 'Deposit: ' . $deposit . '<br>' . 'Name: ' $wt_tour_registration_name,
+				'post_content'	=> 'Deposit: ' . $deposit . '<br>' . 'Name: ' . $wt_tour_registration_name,
 				'post_type'		=> 'tour_registration'
 			)
 		);
