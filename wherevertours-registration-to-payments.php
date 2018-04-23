@@ -19,6 +19,7 @@ function process_tour_payment( $entry, $form) {
 	global $woocommerce;
 	$post = get_post( $entry['post_id']);
 	$product_id = 2906;
+	$wt_tour_registration_name = rgar( $entry, '1' );
 	$tour_registration_title = rgar( $entry, '1' ) . ' ' . rgar( $entry, '14' ) . ' ' . date("h:i:sa");
 	$deposit = get_field('required_deposit_usd', $post);
 	
@@ -26,7 +27,7 @@ function process_tour_payment( $entry, $form) {
 		$post_id = wp_insert_post(
 			array(
 				'post_title'	=> $tour_registration_title,
-				'post_content'	=> $deposit,
+				'post_content'	=> 'Deposit: ' . $deposit . '<br>' . 'Name: ' $wt_tour_registration_name,
 				'post_type'		=> 'tour_registration'
 			)
 		);
