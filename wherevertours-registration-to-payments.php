@@ -21,9 +21,21 @@ function process_tour_payment( $entry, $form) {
 	$product_id = 2906;
 	$wt_tour_registration_name = rgar( $entry, '1.2' ) . rgar( $entry, '1.3' ) . rgar( $entry, '1.4' ) . rgar( $entry, '1.6' ) . rgar( $entry, '1.8' );
 	$tour_registration_title =  rgar( $entry, '14' ) . ' - ' . $wt_tour_registration_name . ' - ' . date("h:i:sa");
-	$deposit = get_field('required_deposit_usd', $post);
 	
 	if (rgar( $entry, '10' ) == 'deposit'){
+		$deposit = get_field('required_deposit_usd', $post);
+		$post_id = wp_insert_post(
+			array(
+				'post_title'	=> $tour_registration_title,
+				'post_content'	=> 'Deposit: ' . $deposit . '<br>' . 'Name: ' . $wt_tour_registration_name,
+				'post_type'		=> 'tour_registration'
+			)
+		);
+		set_transient( 'tour_deposit', $deposit, 60);
+		$woocommerce->cart->add_to_cart($product_id);
+	}
+	if (rgar( $entry, '10' ) == 'custom_deposit'){
+		$deposit = rgar( $entry, '19');
 		$post_id = wp_insert_post(
 			array(
 				'post_title'	=> $tour_registration_title,
