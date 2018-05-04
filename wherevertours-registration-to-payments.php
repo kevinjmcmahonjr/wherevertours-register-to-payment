@@ -14,6 +14,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+/* Remove Admin Bar for non admins */
+if (!current_user_can('edit_posts')) {
+	add_filter('show_admin_bar', '__return_false');
+}
+
+/* Start Payment Processing */
+
 add_action( 'gform_after_submission_1', 'process_tour_payment', 10, 2 );
 function process_tour_payment( $entry, $form) {
 	global $woocommerce;
