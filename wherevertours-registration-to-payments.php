@@ -93,7 +93,7 @@ function populate_tour_dates( $form ){
 		$tour_date_start_end[] = array();
 		// Get ID of current post
 		
-		if( have_rows('available_tour_dates'):
+		if( have_rows('available_tour_dates')):
 			// Checks for Date Repeater Field
 			while( have_rows('available_tour_dates') ): the_row();
 				$tour_date_start_end = get_sub_field('tour_start_date') . " - " . get_sub_field('tour_end_date');
