@@ -90,7 +90,7 @@ function populate_tour_dates( $form ){
 		}
 		global $post;
 		$id = $post->ID;
-		$tour_date_start_end[] = array();
+		$tour_dates[] = array();
 		// Get ID of current post
 		
 		if( have_rows('available_tour_dates')):
@@ -101,7 +101,7 @@ function populate_tour_dates( $form ){
 			endwhile;
 		endif;
 		$field->placeholder = "Select A Tour Date";
-		$field->choices = $tour_date_start_end;
+		$field->choices = $tour_dates;
 	}
 	return $form;
 }
