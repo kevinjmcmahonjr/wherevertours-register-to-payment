@@ -103,6 +103,6 @@ function populate_tour_dates( $form ){
 		$field->placeholder = "Select A Tour Date";
 		$field->choices = $tour_date_start_end;
 	}
-	return $form
-}	
+	return $form;
+}
 ?>
