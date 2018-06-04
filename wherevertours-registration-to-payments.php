@@ -77,4 +77,32 @@ function update_wc_cart_totals($cart_obj) {
 }
 add_action( 'woocommerce_before_calculate_totals', 'update_wc_cart_totals', 10, 1 );
 
+add_filter( 'gform_pre_render_8', 'populate_tour_dates' );
+add_filter( 'gform_pre_validation_8', 'populate_tour_dates' );
+add_filter( 'gform_pre_submission_filter_8', 'populate_tour_dates' );
+add_filter( 'gform_admin_pre_render_8', 'populate_tour_dates' );
+function populate_tour_dates( $form ){
+	// Checks each form field
+	foreach( $form['fields'] as &$field ) {
+		// Only proceeds if Form Field has .tour-date CSS class
+		if ( $field->type != 'select' || strpos( $field->cssClass, 'tour-date' ) === false ) {
+			continue;
+		}
+		global $post;
+		$id = $post->ID;
+		$tour_date_start_end[] = array();
+		// Get ID of current post
+		
+		if ( have_rows('available_tour_dates'){
+			// Checks for Date Repeater Field
+			while ( have_rows('available_tour_dates') ){
+				$tour_date_start_end = get_sub_field('tour_start_date') . " - " . get_sub_field('tour_end_date');
+				array_push($tour_dates, $tour_date_start_end);
+			}
+		}
+		$field->placeholder = "Select A Tour Date";
+		$field->choices = $tour_date_start_end;
+	}
+	return $form
+}	
 ?>
