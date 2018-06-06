@@ -116,7 +116,7 @@ function populate_tour_dates( $form ){
 					}
 				endwhile;
 			endif;
-			$field->placeholder = "Select A Tour Date";
+			$field->placeholder = "Select A Room Number";
 			$field->choices = $tour_available_room_numbers;
 		} 
 	}
