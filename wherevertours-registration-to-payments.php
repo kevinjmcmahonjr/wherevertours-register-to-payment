@@ -84,7 +84,7 @@ function populate_tour_dates( $form ){
 	// Checks each form field
 	foreach( $form['fields'] as &$field ) {
 		// Only proceeds if Form Field has .tour-date CSS class
-		if ( ($field->type != 'select') || (strpos( $field->cssClass, 'tour-date' ) === false) ) {
+		if ( $field->type != 'select' || strpos( $field->cssClass, 'tour-date' ) === false ) {
 			continue;
 		}
 			
@@ -112,7 +112,7 @@ add_filter( 'gform_admin_pre_render_8', 'populate_tour_dates' );
 // Gets Tour Information and Populates Available Room Numbers Into Gravity Form Fields
 function populate_available_room_numbers( $form ) {
 	foreach( $form['fields'] as &$field ) {
-		if ( ($field->type != 'select') || (strpos( $field->cssClass, 'tour-room-number' ) === false) ) {
+		if ( $field->type != 'select' || strpos( $field->cssClass, 'tour-room-number' ) === false ) {
 			continue;
 		}
 				
@@ -132,6 +132,7 @@ function populate_available_room_numbers( $form ) {
 		$field->placeholder = "Select A Room Number";
 		$field->choices = $tour_available_room_numbers;
 	}
+	return $form;
 }
 add_filter( 'gform_pre_render_8', 'populate_available_room_numbers' );
 add_filter( 'gform_pre_validation_8', 'populate_available_room_numbers' );
