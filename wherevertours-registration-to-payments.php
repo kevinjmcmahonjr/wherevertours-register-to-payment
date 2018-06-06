@@ -153,7 +153,7 @@ function gfapi_vardump_entry( $atts ) {
 	);
 	$entry_id = $atts['entry'];
 	$entry = GFAPI::get_entry( $entry_id );
-	var_dump ($entry);
+	echo '<pre>', var_dump ($entry), '</pre>';
 
 }
 add_shortcode( 'gfvardump', 'gfapi_vardump_entry' );
