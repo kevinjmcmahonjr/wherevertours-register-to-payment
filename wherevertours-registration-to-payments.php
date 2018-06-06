@@ -108,7 +108,7 @@ function populate_tour_dates( $form ){
 add_filter( 'gform_pre_render_8', 'populate_tour_dates' );
 add_filter( 'gform_pre_validation_8', 'populate_tour_dates' );
 add_filter( 'gform_pre_submission_filter_8', 'populate_tour_dates' );
-//add_filter( 'gform_admin_pre_render_8', 'populate_tour_dates' );
+add_filter( 'gform_admin_pre_render_8', 'populate_tour_dates' );
 
 // Gets Tour Information and Populates Available Room Numbers Into Gravity Form Fields
 function populate_available_room_numbers( $form ) {
@@ -139,5 +139,5 @@ function populate_available_room_numbers( $form ) {
 add_filter( 'gform_pre_render_8', 'populate_available_room_numbers' );
 add_filter( 'gform_pre_validation_8', 'populate_available_room_numbers' );
 add_filter( 'gform_pre_submission_filter_8', 'populate_available_room_numbers' );
-//add_filter( 'gform_admin_pre_render_8', 'populate_available_room_numbers' );
+add_filter( 'gform_admin_pre_render_8', 'populate_available_room_numbers' );
 ?>
