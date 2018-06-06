@@ -60,6 +60,7 @@ function calculate_tour_payment($cart_item_data, $product_id, $variation_id){
     }
 add_filter ('woocommerce_add_cart_item_data', 'calculate_tour_payment', 10, 3 );
 
+// Gives WooCommerce Item A Unique Key
 function namespace_force_individual_cart_items( $cart_item_data, $product_id ) {
 	$unique_cart_item_key = md5( microtime() . rand() );
 	$cart_item_data['unique_key'] = $unique_cart_item_key;
@@ -67,6 +68,7 @@ function namespace_force_individual_cart_items( $cart_item_data, $product_id ) {
 }
 add_filter( 'woocommerce_add_cart_item_data', 'namespace_force_individual_cart_items', 10, 2 );
 
+// Update WooCommerce Cart
 function update_wc_cart_totals($cart_obj) {
 	foreach( $cart_obj->get_cart() as $key=>$value ) {
 		if (isset ($value['deposit'])) {
@@ -77,34 +79,51 @@ function update_wc_cart_totals($cart_obj) {
 }
 add_action( 'woocommerce_before_calculate_totals', 'update_wc_cart_totals', 10, 1 );
 
-add_filter( 'gform_pre_render_8', 'populate_tour_dates' );
-add_filter( 'gform_pre_validation_8', 'populate_tour_dates' );
-add_filter( 'gform_pre_submission_filter_8', 'populate_tour_dates' );
-add_filter( 'gform_admin_pre_render_8', 'populate_tour_dates' );
+// Gets Tour Information and Populates It Into Gravity Form Fields
 function populate_tour_dates( $form ){
 	// Checks each form field
 	foreach( $form['fields'] as &$field ) {
 		// Only proceeds if Form Field has .tour-date CSS class
 		if ( $field->type != 'select' || strpos( $field->cssClass, 'tour-date' ) === false ) {
-			continue;
-		}
-		global $post;
-		$id = $post->ID;
-		$tour_dates = array();
-		// Get ID of current post
-		
-		if( have_rows('available_tour_dates')):
+			
+			global $post;
+			$id = $post->ID;
+			$tour_dates = array();
+			// Get ID of current post
+			
+			if( have_rows('available_tour_dates')):
 			// Checks for Date Repeater Field
-			while( have_rows('available_tour_dates') ): the_row();
-				//$tour_date_start_end = the_sub_field('tour_start_date') . " - " . the_sub_field('tour_end_date');
-				//array_push($tour_dates, $tour_date_start_end);
-				//array_push($tour_dates, get_sub_field('tour_start_date'));
-				$tour_dates[] = array( 'text' => get_sub_field('tour_start_date'), 'value' => get_sub_field('tour_start_date') );
-			endwhile;
-		endif;
-		$field->placeholder = "Select A Tour Date";
-		$field->choices = $tour_dates;
+				while( have_rows('available_tour_dates') ): the_row();
+					$tour_dates[] = array( 'text' => get_sub_field('tour_start_date'), 'value' => get_sub_field('tour_start_date') );
+				endwhile;
+			endif;
+			$field->placeholder = "Select A Tour Date";
+			$field->choices = $tour_dates;
+		}
+		
+		if ( $field->type != 'select' || strpos( $field->cssClass, 'tour-room-number' ) === false ) {
+			
+			global $post;
+			$id = $post->ID;
+			$tour_available_room_numbers = array();
+			// Get ID of current post
+			
+			if( have_rows('room_information')):
+			// Checks for Room Repeater Field
+				while( have_rows('room_information') ): the_row();
+					if (get_sub_field('room_status') == 'available'){
+						$tour_available_room_numbers[] = array( 'text' => get_sub_field('room_number'), 'value' => get_sub_field('room_number') );
+					}
+				endwhile;
+			endif;
+			$field->placeholder = "Select A Tour Date";
+			$field->choices = $tour_available_room_numbers;
+		} 
 	}
 	return $form;
 }
+add_filter( 'gform_pre_render_8', 'populate_tour_dates' );
+add_filter( 'gform_pre_validation_8', 'populate_tour_dates' );
+add_filter( 'gform_pre_submission_filter_8', 'populate_tour_dates' );
+add_filter( 'gform_admin_pre_render_8', 'populate_tour_dates' );
 ?>
