@@ -124,9 +124,10 @@ function populate_available_room_numbers( $form ) {
 		if( have_rows('room_information')):
 		// Checks for Room Repeater Field
 			while( have_rows('room_information') ): the_row();
-				if (get_sub_field('room_status') == 'Available'){
-					$tour_available_room_numbers[] = array( 'text' => get_sub_field('room_number'), 'value' => get_sub_field('room_number') );
+				if (get_sub_field('room_status') != 'Available'){
+					continue;
 				}
+				$tour_available_room_numbers[] = array( 'text' => get_sub_field('room_number'), 'value' => get_sub_field('room_number') );
 			endwhile;
 		endif;
 		$field->placeholder = "Select A Room Number";
