@@ -111,25 +111,27 @@ add_filter( 'gform_admin_pre_render_8', 'populate_tour_dates' );
 
 // Gets Tour Information and Populates Available Room Numbers Into Gravity Form Fields
 function populate_available_room_numbers( $form ) {
-	if ( ($field->type != 'select') || (strpos( $field->cssClass, 'tour-room-number' ) === false) ) {
-		continue;
+	foreach( $form['fields'] as &$field ) {
+		if ( ($field->type != 'select') || (strpos( $field->cssClass, 'tour-room-number' ) === false) ) {
+			continue;
+		}
+				
+		global $post;
+		$id = $post->ID;
+		$tour_available_room_numbers = array();
+		// Get ID of current post
+		
+		if( have_rows('room_information')):
+		// Checks for Room Repeater Field
+			while( have_rows('room_information') ): the_row();
+				if (get_sub_field('room_status') == 'available'){
+					$tour_available_room_numbers[] = array( 'text' => get_sub_field('room_number'), 'value' => get_sub_field('room_number') );
+				}
+			endwhile;
+		endif;
+		$field->placeholder = "Select A Room Number";
+		$field->choices = $tour_available_room_numbers;
 	}
-			
-	global $post;
-	$id = $post->ID;
-	$tour_available_room_numbers = array();
-	// Get ID of current post
-	
-	if( have_rows('room_information')):
-	// Checks for Room Repeater Field
-		while( have_rows('room_information') ): the_row();
-			if (get_sub_field('room_status') == 'available'){
-				$tour_available_room_numbers[] = array( 'text' => get_sub_field('room_number'), 'value' => get_sub_field('room_number') );
-			}
-		endwhile;
-	endif;
-	$field->placeholder = "Select A Room Number";
-	$field->choices = $tour_available_room_numbers;
 }
 add_filter( 'gform_pre_render_8', 'populate_available_room_numbers' );
 add_filter( 'gform_pre_validation_8', 'populate_available_room_numbers' );
