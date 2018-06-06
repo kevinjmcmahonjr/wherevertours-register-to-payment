@@ -79,46 +79,28 @@ function update_wc_cart_totals($cart_obj) {
 }
 add_action( 'woocommerce_before_calculate_totals', 'update_wc_cart_totals', 10, 1 );
 
-// Gets Tour Information and Populates It Into Gravity Form Fields
+// Gets Tour Information and Populates Available Dates Into Gravity Form Fields
 function populate_tour_dates( $form ){
 	// Checks each form field
 	foreach( $form['fields'] as &$field ) {
 		// Only proceeds if Form Field has .tour-date CSS class
-		if ( ($field->type == 'select') && (strpos( $field->cssClass, 'tour-date' ) === true) ) {
-			
-			global $post;
-			$id = $post->ID;
-			$tour_dates = array();
-			// Get ID of current post
-			
-			if( have_rows('available_tour_dates')):
-			// Checks for Date Repeater Field
-				while( have_rows('available_tour_dates') ): the_row();
-					$tour_dates[] = array( 'text' => get_sub_field('tour_start_date'), 'value' => get_sub_field('tour_start_date') );
-				endwhile;
-			endif;
-			$field->placeholder = "Select A Tour Date";
-			$field->choices = $tour_dates;
+		if ( ($field->type != 'select') || (strpos( $field->cssClass, 'tour-date' ) === false) ) {
+			continue;
 		}
+			
+		global $post;
+		$id = $post->ID;
+		$tour_dates = array();
+		// Get ID of current post
 		
-		if ( ($field->type == 'select') && (strpos( $field->cssClass, 'tour-room-number' ) === true) ) {
-			
-			global $post;
-			$id = $post->ID;
-			$tour_available_room_numbers = array();
-			// Get ID of current post
-			
-			if( have_rows('room_information')):
-			// Checks for Room Repeater Field
-				while( have_rows('room_information') ): the_row();
-					if (get_sub_field('room_status') == 'available'){
-						$tour_available_room_numbers[] = array( 'text' => get_sub_field('room_number'), 'value' => get_sub_field('room_number') );
-					}
-				endwhile;
-			endif;
-			$field->placeholder = "Select A Room Number";
-			$field->choices = $tour_available_room_numbers;
-		} 
+		if( have_rows('available_tour_dates')):
+		// Checks for Date Repeater Field
+			while( have_rows('available_tour_dates') ): the_row();
+				$tour_dates[] = array( 'text' => get_sub_field('tour_start_date'), 'value' => get_sub_field('tour_start_date') );
+			endwhile;
+		endif;
+		$field->placeholder = "Select A Tour Date";
+		$field->choices = $tour_dates;
 	}
 	return $form;
 }
@@ -126,4 +108,31 @@ add_filter( 'gform_pre_render_8', 'populate_tour_dates' );
 add_filter( 'gform_pre_validation_8', 'populate_tour_dates' );
 add_filter( 'gform_pre_submission_filter_8', 'populate_tour_dates' );
 add_filter( 'gform_admin_pre_render_8', 'populate_tour_dates' );
+
+// Gets Tour Information and Populates Available Room Numbers Into Gravity Form Fields
+function populate_available_room_numbers( $form ) {
+	if ( ($field->type != 'select') || (strpos( $field->cssClass, 'tour-room-number' ) === false) ) {
+		continue;
+	}
+			
+	global $post;
+	$id = $post->ID;
+	$tour_available_room_numbers = array();
+	// Get ID of current post
+	
+	if( have_rows('room_information')):
+	// Checks for Room Repeater Field
+		while( have_rows('room_information') ): the_row();
+			if (get_sub_field('room_status') == 'available'){
+				$tour_available_room_numbers[] = array( 'text' => get_sub_field('room_number'), 'value' => get_sub_field('room_number') );
+			}
+		endwhile;
+	endif;
+	$field->placeholder = "Select A Room Number";
+	$field->choices = $tour_available_room_numbers;
+}
+add_filter( 'gform_pre_render_8', 'populate_available_room_numbers' );
+add_filter( 'gform_pre_validation_8', 'populate_available_room_numbers' );
+add_filter( 'gform_pre_submission_filter_8', 'populate_available_room_numbers' );
+add_filter( 'gform_admin_pre_render_8', 'populate_available_room_numbers' );
 ?>
