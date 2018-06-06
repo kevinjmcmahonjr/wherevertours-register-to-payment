@@ -140,4 +140,21 @@ add_filter( 'gform_pre_render_8', 'populate_available_room_numbers' );
 add_filter( 'gform_pre_validation_8', 'populate_available_room_numbers' );
 add_filter( 'gform_pre_submission_filter_8', 'populate_available_room_numbers' );
 //add_filter( 'gform_admin_pre_render_8', 'populate_available_room_numbers' );
+
+// Add Shortcode
+function gfapi_vardump_entry( $atts ) {
+
+	// Attributes
+	$atts = shortcode_atts(
+		array(
+			'entry' => '',
+		),
+		$atts
+	);
+	$entry_id = $atts['entry'];
+	$entry = GFAPI::get_entry( $entry_id );
+	var_dump ($entry);
+
+}
+add_shortcode( 'gfvardump', 'gfapi_vardump_entry' );
 ?>
