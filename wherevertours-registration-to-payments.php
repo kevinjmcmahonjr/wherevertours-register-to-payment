@@ -84,7 +84,7 @@ function populate_tour_dates( $form ){
 	// Checks each form field
 	foreach( $form['fields'] as &$field ) {
 		// Only proceeds if Form Field has .tour-date CSS class
-		if ( $field->type == 'select' || strpos( $field->cssClass, 'tour-date' ) === true ) {
+		if ( $field->type == 'select' && strpos( $field->cssClass, 'tour-date' ) === true ) {
 			
 			global $post;
 			$id = $post->ID;
@@ -101,7 +101,7 @@ function populate_tour_dates( $form ){
 			$field->choices = $tour_dates;
 		}
 		
-		if ( $field->type == 'select' || strpos( $field->cssClass, 'tour-room-number' ) === true ) {
+		if ( $field->type == 'select' && strpos( $field->cssClass, 'tour-room-number' ) === true ) {
 			
 			global $post;
 			$id = $post->ID;
