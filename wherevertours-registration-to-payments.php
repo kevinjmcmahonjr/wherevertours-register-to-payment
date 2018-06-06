@@ -14,32 +14,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-add_action( 'gform_after_submission_1', 'process_tour_payment', 10, 2 );
+add_action( 'gform_after_submission_8', 'process_tour_payment', 10, 2 );
 function process_tour_payment( $entry, $form) {
 	global $woocommerce;
 	$post = get_post( $entry['post_id']);
 	$product_id = 2906;
-	$wt_tour_registration_name = rgar( $entry, '1.2' ) . rgar( $entry, '1.3' ) . rgar( $entry, '1.4' ) . rgar( $entry, '1.6' ) . rgar( $entry, '1.8' );
-	$tour_registration_title =  rgar( $entry, '14' ) . ' - ' . $wt_tour_registration_name . ' - ' . date("h:i:sa");
+	//$wt_tour_registration_name = rgar( $entry, '1.2' ) . rgar( $entry, '1.3' ) . rgar( $entry, '1.4' ) . rgar( $entry, '1.6' ) . rgar( $entry, '1.8' );
+	//$tour_registration_title =  rgar( $entry, '14' ) . ' - ' . $wt_tour_registration_name . ' - ' . date("h:i:sa");
+	$tour_registration_title =  rgar( $entry, '22' ) . ' - ' . date("h:i:sa");
 	
-	if (rgar( $entry, '10' ) == 'deposit'){
+	if (rgar( $entry, '17' ) == 'deposit'){
 		$deposit = get_field('required_deposit_usd', $post);
 		$post_id = wp_insert_post(
 			array(
 				'post_title'	=> $tour_registration_title,
-				'post_content'	=> 'Deposit: ' . $deposit . '<br>' . 'Name: ' . $wt_tour_registration_name,
+				'post_content'	=> 'Deposit: ' . $deposit . '<br>' . /*'Name: ' . $wt_tour_registration_name*/,
 				'post_type'		=> 'tour_registration'
 			)
 		);
 		set_transient( 'tour_deposit', $deposit, 60);
 		$woocommerce->cart->add_to_cart($product_id);
 	}
-	if (rgar( $entry, '10' ) == 'custom_deposit'){
-		$deposit = rgar( $entry, '19');
+	if (rgar( $entry, '17' ) == 'custom_deposit'){
+		$deposit = rgar( $entry, '26');
 		$post_id = wp_insert_post(
 			array(
 				'post_title'	=> $tour_registration_title,
-				'post_content'	=> 'Deposit: ' . $deposit . '<br>' . 'Name: ' . $wt_tour_registration_name,
+				'post_content'	=> 'Deposit: ' . $deposit . '<br>' . /*'Name: ' . $wt_tour_registration_name*/,
 				'post_type'		=> 'tour_registration'
 			)
 		);
