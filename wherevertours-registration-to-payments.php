@@ -61,7 +61,7 @@ function process_tour_payment( $entry, $form) {
 }
 
 function calculate_tour_payment($cart_item_data, $product_id, $variation_id){
-	if ( (get_transient('tour_deposit')) && (get_transient('tour_cart_title')) ){
+	if ( !(false === ($calculated_price = get_transient('tour_deposit')))&& !(false ===($generated_tour_cart_title = get_transient('tour_cart_title'))) ){
 		$calculated_price = get_transient('tour_deposit');
 		$generated_tour_cart_title = get_transient('tour_cart_title');
 		$product = wc_get_product( $product_id );
@@ -71,6 +71,7 @@ function calculate_tour_payment($cart_item_data, $product_id, $variation_id){
 		$cart_item_data['tour_cart_title'] = $generated_tour_cart_title;
 		return $cart_item_data;
     }
+}
 add_filter ('woocommerce_add_cart_item_data', 'calculate_tour_payment', 10, 3 );
 
 // Gives WooCommerce Item A Unique Key
