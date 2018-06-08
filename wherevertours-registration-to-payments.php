@@ -68,7 +68,7 @@ function calculate_tour_payment($cart_item_data, $product_id, $variation_id){
 			$product_price = $product->get_price();
 			//delete_transient( 'tour_deposit' );
 			$cart_item_data['deposit'] = $product_price + $calculated_price;
-			if(!(generated_tour_cart_title === null) || !(generated_tour_cart_title === false)){
+			if(!($generated_tour_cart_title === null) || !($generated_tour_cart_title === false)){
 				$cart_item_data['tour_cart_title'] = $generated_tour_cart_title;
 			}
 			return $cart_item_data;
@@ -87,12 +87,13 @@ add_filter( 'woocommerce_add_cart_item_data', 'namespace_force_individual_cart_i
 // Update WooCommerce Cart
 function update_wc_cart_totals($cart_obj) {
 	foreach( $cart_obj->get_cart() as $key=>$value ) {
+		$wc_product_data = $cart_obj['data'];
 		if (isset ($value['deposit'])) {
 			$price = $value['deposit'];
 			$value['data']->set_price( ($price) );
 		}
 		if (isset ($value['tour_cart_title'])) {
-			if (method_exists( $wc_product, 'set_name' ) ) {
+			if (method_exists( $wc_product_data, 'set_name' ) ) {
 				$tour_cart_name = $value['tour_cart_name'];
 				$wc_product->set_name( $tour_cart_title );
 			}
