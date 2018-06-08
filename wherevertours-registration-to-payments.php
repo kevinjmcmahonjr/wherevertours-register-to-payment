@@ -18,9 +18,10 @@ add_action( 'gform_after_submission_8', 'process_tour_payment', 10, 2 );
 function process_tour_payment( $entry, $form) {
 	global $woocommerce;
 	$post = get_post( $entry['post_id']);
+	$gf_nested_entry_ids = $entry[1];
 	$product_id = 2906;
-	foreach ( $entry[1] as &$gf_nested_entry_id ){
-		$current_nested_entry = GFAPI::get_entry($gf_nested_entry_id);
+	foreach ( $gf_nested_entry_ids as &$gf_current_nested_entry_id ){
+		$current_nested_entry = GFAPI::get_entry($gf_current_nested_entry_id);
 		$wt_tour_registration_name = rgar( $current_nested_entry, '1.2' ) . rgar( $current_nested_entry, '1.3' ) . rgar( $current_nested_entry, '1.4' ) . rgar( $current_nested_entry, '1.6' ) . rgar( $current_nested_entry, '1.8' );
 		$tour_registration_title =  rgar( $entry, '22' ) . ' - ' . $wt_tour_registration_name . ' - ' . date("h:i:sa");
 		
@@ -29,7 +30,7 @@ function process_tour_payment( $entry, $form) {
 			$post_id = wp_insert_post(
 				array(
 					'post_title'	=> $tour_registration_title,
-					'post_content'	=> 'Deposit: ' . $deposit . '<br>' /*. 'Name: ' . $wt_tour_registration_name*/,
+					'post_content'	=> 'Deposit: ' . $deposit . '<br>' . 'Name: ' . $wt_tour_registration_name,
 					'post_type'		=> 'tour_registration'
 				)
 			);
@@ -41,7 +42,7 @@ function process_tour_payment( $entry, $form) {
 			$post_id = wp_insert_post(
 				array(
 					'post_title'	=> $tour_registration_title,
-					'post_content'	=> 'Deposit: ' . $deposit . '<br>' /*. 'Name: ' . $wt_tour_registration_name*/,
+					'post_content'	=> 'Deposit: ' . $deposit . '<br>' . 'Name: ' . $wt_tour_registration_name,
 					'post_type'		=> 'tour_registration'
 				)
 			);
