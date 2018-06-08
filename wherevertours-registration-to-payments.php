@@ -24,7 +24,7 @@ function process_tour_payment( $entry, $form) {
 		$current_nested_entry = GFAPI::get_entry($gf_current_nested_entry_id);
 		$wt_tour_registration_name = rgar( $current_nested_entry, '1.2' ) . rgar( $current_nested_entry, '1.3' ) . rgar( $current_nested_entry, '1.4' ) . rgar( $current_nested_entry, '1.6' ) . rgar( $current_nested_entry, '1.8' );
 		$tour_registration_title =  rgar( $entry, '22' ) . ' - ' . $wt_tour_registration_name . ' - ' . date("h:i:sa");
-		$tour_cart_title = 'Tour Deposit For: ' . rgar( $entry, '22' ) . ' - ' $wt_tour_registration_name;
+		$tour_cart_title = 'Tour Deposit For: ' . rgar( $entry, '22' ) . ' - ' . $wt_tour_registration_name;
 		
 		if (rgar( $entry, '17' ) == 'deposit'){
 			$deposit = get_field('required_deposit_usd', $post);
