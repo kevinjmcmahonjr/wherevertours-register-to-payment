@@ -63,7 +63,7 @@ function process_tour_payment( $entry, $form) {
 function calculate_tour_payment($cart_item_data, $product_id, $variation_id){
 	$calculated_price = get_transient('tour_deposit');
 	$generated_tour_cart_title = get_transient('tour_cart_title');
-	if (!($calculated_price === false) || !($calculated_price === null){
+	if (!($calculated_price === false) || !($calculated_price === null)){
 			$product = wc_get_product( $product_id );
 			$product_price = $product->get_price();
 			//delete_transient( 'tour_deposit' );
