@@ -18,7 +18,7 @@ add_action( 'gform_after_submission_8', 'process_tour_payment', 10, 2 );
 function process_tour_payment( $entry, $form) {
 	global $woocommerce;
 	$post = get_post( $entry['post_id']);
-	$gf_nested_entry_ids = $entry[1];
+	$gf_nested_entry_ids = $entry['1'];
 	$product_id = 2906;
 	foreach ( $gf_nested_entry_ids as &$gf_current_nested_entry_id ){
 		$current_nested_entry = GFAPI::get_entry($gf_current_nested_entry_id);
