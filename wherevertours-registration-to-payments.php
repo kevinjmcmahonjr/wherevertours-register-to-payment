@@ -19,6 +19,7 @@ function process_tour_payment( $entry, $form ) {
 	// Variables for Woocommerce
 	global $woocommerce;
 	$product_id = 2906;
+	$woocommerce->cart->add_to_cart($product_id);
 	// Variables from Form Data
 	$post = get_post( $entry['post_id']);
 	$gf_nested_entry_ids = explode( ',', $entry[1] );
@@ -63,7 +64,7 @@ function process_tour_payment( $entry, $form ) {
 				'cart_title'	=> $generated_tour_cart_title
 			);
 			//global $woocommerce;
-			$woocommerce->cart->add_to_cart($product_id, $cart_item_data);
+			//$woocommerce->cart->add_to_cart($product_id, $cart_item_data);
 		}
 		
 		elseif ($payment_option == 'custom_deposit'){
