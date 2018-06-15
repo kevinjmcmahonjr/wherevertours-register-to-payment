@@ -91,16 +91,13 @@ function process_tour_payment( $entry, $form ) {
 
 function update_wc_cart_totals($cart_obj){
 	foreach( $cart_obj->get_cart() as $key=>$value ) {
-		$wc_product_data = $cart_obj['data'];
 		if (isset ($value['tour_deposit'])) {
 			$price = $value['tour_deposit'];
 			$value['data']->set_price( $price );
 		}
 		if (isset ($value['tour_cart_title'])) {
-			if (method_exists( $wc_product_data, 'set_name' ) ) {
-				$tour_cart_name = $value['cart_name'];
-				$wc_product->set_name( $tour_cart_title );
-			}
+			$tour_cart_name = $value['tour_cart_name'];
+			$wc_product->set_name( $tour_cart_title );
 		}
 	}
 }
