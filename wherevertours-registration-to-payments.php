@@ -105,15 +105,15 @@ function process_tour_payment( $entry, $form ) {
 add_filter ('woocommerce_add_cart_item_data', 'calculate_tour_payment', 10, 3 );*/
 
 // Gives WooCommerce Item A Unique Key
-function namespace_force_individual_cart_items( $cart_item_data, $product_id ) {
+/*function namespace_force_individual_cart_items( $cart_item_data, $product_id ) {
 	$unique_cart_item_key = md5( microtime() . rand() );
 	$cart_item_data['unique_key'] = $unique_cart_item_key;
 	return $cart_item_data;
 }
-add_filter( 'woocommerce_add_cart_item_data', 'namespace_force_individual_cart_items', 10, 2 );
+add_filter( 'woocommerce_add_cart_item_data', 'namespace_force_individual_cart_items', 10, 2 );*/
 
 // Update WooCommerce Cart
-function update_wc_cart_totals($cart_obj) {
+/*function update_wc_cart_totals($cart_obj) {
 	foreach( $cart_obj->get_cart() as $key=>$value ) {
 		$wc_product_data = $cart_obj['data'];
 		if (isset ($value['deposit'])) {
@@ -128,7 +128,7 @@ function update_wc_cart_totals($cart_obj) {
 		}
 	}
 }
-add_action( 'woocommerce_before_calculate_totals', 'update_wc_cart_totals', 10, 1 );
+add_action( 'woocommerce_before_calculate_totals', 'update_wc_cart_totals', 10, 1 );*/
 
 // Gets Tour Information and Populates Available Dates Into Gravity Form Fields
 function populate_tour_dates( $form ){
