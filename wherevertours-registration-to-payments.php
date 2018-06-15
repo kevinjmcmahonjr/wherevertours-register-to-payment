@@ -52,7 +52,7 @@ function process_tour_payment( $entry, $form ) {
 		
 		if ($payment_option == 'deposit'){
 			$deposit = get_field('required_deposit_usd', $post);
-			if(function_exists(wt_create_registration_entry)){
+			if(function_exists('wt_create_registration_entry')){
 				wt_create_registration_entry($tour_registration_title, $wt_tour_registration_name, $deposit);
 			}
 			/*if(function_exists(wt_set_session_data_for_tour)){
