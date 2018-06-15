@@ -77,7 +77,7 @@ function process_tour_payment( $entry, $form) {
 				'deposit'		=> $deposit,
 				'cart_title'	=> $generated_tour_cart_title
 			);
-			$woocommerce->cart->add_to_cart($product_id);
+			$woocommerce->cart->add_to_cart($product_id, $cart_item_data);
 		}
 	}
 	
