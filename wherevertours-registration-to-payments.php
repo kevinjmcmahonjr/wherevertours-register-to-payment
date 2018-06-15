@@ -39,8 +39,8 @@ function process_tour_payment( $entry, $form ) {
 		// Get Woocommerce Global Variable
 		global $woocommerce;
 		// Add a Unique Key To Product
-		//$unique_cart_item_key = md5( microtime() . rand() );
-		//$cart_item_data['unique_key'] = $unique_cart_item_key;
+		$unique_cart_item_key = md5( microtime() . rand() );
+		$cart_item_data['unique_key'] = $unique_cart_item_key;
 		// Add Product To Cart
 		$woocommerce->cart->add_to_cart($product_id, '1', '', '', $cart_item_data);
 	}
