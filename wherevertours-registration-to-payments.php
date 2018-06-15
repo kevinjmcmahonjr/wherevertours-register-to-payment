@@ -36,17 +36,17 @@ function process_tour_payment( $entry, $form) {
 		);
 	}
 	
-	function wt_set_session_data_for_tour($deposit, $generated_tour_cart_title){
+	/*function wt_set_session_data_for_tour($deposit, $generated_tour_cart_title){
 		$_POST['wt_deposit_amount'] = $deposit;
 		$_POST['wt_tour_cart_title'] = $generated_tour_cart_title;
-	}
+	}*/
 	
 	// Loop Through Nested Entries
 	foreach ( $gf_nested_entry_ids as $gf_current_nested_entry_id ){
 		// Get The Current Nested Entry's Form Data
 		$current_nested_entry = GFAPI::get_entry($gf_current_nested_entry_id);
 		// Get The Name
-		$wt_tour_registration_name = rgar( $current_nested_entry, '1' );
+		$wt_tour_registration_name = rgar( $current_nested_entry, '1.2' ) . rgar( $current_nested_entry, '1.3' ) . rgar( $current_nested_entry, '1.4' ) . rgar( $current_nested_entry, '1.6' ) . rgar( $current_nested_entry, '1.8' );
 		// Create the Product Title for Cart and Checkout
 		$generated_tour_cart_title = 'Tour Deposit For: ' . $tour_registration_title . ' - ' . $wt_tour_registration_name;
 		
@@ -58,7 +58,11 @@ function process_tour_payment( $entry, $form) {
 			if(function_exists(wt_set_session_data_for_tour)){
 				wt_set_session_data_for_tour($deposit, $generated_tour_cart_title);
 			}
-			$woocommerce->cart->add_to_cart($product_id);
+			$cart_item_data = array(
+				'deposit'		=> $deposit,
+				'cart_title'	=> $generated_tour_cart_title
+			);
+			$woocommerce->cart->add_to_cart($product_id, $cart_item_data);
 		}
 		
 		if ($payment_option == 'custom_deposit'){
@@ -69,6 +73,10 @@ function process_tour_payment( $entry, $form) {
 			if(function_exists(wt_set_session_data_for_tour)){
 				wt_set_session_data_for_tour($deposit, $generated_tour_cart_title);
 			}
+			$cart_item_data = array(
+				'deposit'		=> $deposit,
+				'cart_title'	=> $generated_tour_cart_title
+			);
 			$woocommerce->cart->add_to_cart($product_id);
 		}
 	}
@@ -79,7 +87,7 @@ function process_tour_payment( $entry, $form) {
 	
 }
 
-function calculate_tour_payment($cart_item_data, $product_id, $variation_id){
+/*function calculate_tour_payment($cart_item_data, $product_id, $variation_id){
 	if(isset($_POST['wt_deposit_amount'])){
 		$calculated_price = $_POST['wt_deposit_amount'];
 		$product = wc_get_product( $product_id );
@@ -93,7 +101,7 @@ function calculate_tour_payment($cart_item_data, $product_id, $variation_id){
 
 	return $cart_item_data;
 }
-add_filter ('woocommerce_add_cart_item_data', 'calculate_tour_payment', 10, 3 );
+add_filter ('woocommerce_add_cart_item_data', 'calculate_tour_payment', 10, 3 );*/
 
 // Gives WooCommerce Item A Unique Key
 function namespace_force_individual_cart_items( $cart_item_data, $product_id ) {
@@ -111,9 +119,9 @@ function update_wc_cart_totals($cart_obj) {
 			$price = $value['deposit'];
 			$value['data']->set_price( $price );
 		}
-		if (isset ($value['tour_cart_title'])) {
+		if (isset ($value['cart_title'])) {
 			if (method_exists( $wc_product_data, 'set_name' ) ) {
-				$tour_cart_name = $value['tour_cart_name'];
+				$tour_cart_name = $value['cart_name'];
 				$wc_product->set_name( $tour_cart_title );
 			}
 		}
