@@ -37,7 +37,7 @@ function process_tour_payment( $entry, $form ) {
 	}
 	
 	function wt_add_tour_to_cart($product_id){
-		global woocommerce;
+		global $woocommerce;
 		$woocommerce->cart->add_to_cart($product_id);
 	}
 	/*function wt_set_session_data_for_tour($deposit, $generated_tour_cart_title){
