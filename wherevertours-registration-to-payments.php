@@ -36,8 +36,9 @@ function process_tour_payment( $entry, $form) {
 		);
 	}
 	
-	function wt_set_session_data_for_tour(){
-		
+	function wt_set_session_data_for_tour($deposit, $generated_tour_cart_title){
+		$_POST['wt_deposit_amount'] = $deposit;
+		$_POST['wt_tour_cart_title'] = $generated_tour_cart_title;
 	}
 	
 	// Loop Through Nested Entries
@@ -54,8 +55,9 @@ function process_tour_payment( $entry, $form) {
 			if(function_exists(wt_create_registration_entry)){
 				wt_create_registration_entry($tour_registration_title, $wt_tour_registration_name, $deposit);
 			}
-			$_POST['wt_deposit_amount'] = $deposit;
-			$_POST['wt_tour_cart_title'] = $generated_tour_cart_title;
+			if(function_exists(wt_set_session_data_for_tour)){
+				wt_set_session_data_for_tour($deposit, $generated_tour_cart_title);
+			}
 			$woocommerce->cart->add_to_cart($product_id);
 		}
 		
@@ -64,8 +66,9 @@ function process_tour_payment( $entry, $form) {
 			if(function_exists(wt_create_registration_entry)){
 				wt_create_registration_entry($tour_registration_title, $wt_tour_registration_name, $deposit);
 			}
-			$_POST['wt_deposit_amount'] = $deposit;
-			$_POST['wt_tour_cart_title'] = $generated_tour_cart_title;
+			if(function_exists(wt_set_session_data_for_tour)){
+				wt_set_session_data_for_tour($deposit, $generated_tour_cart_title);
+			}
 			$woocommerce->cart->add_to_cart($product_id);
 		}
 	}
@@ -106,7 +109,7 @@ function update_wc_cart_totals($cart_obj) {
 		$wc_product_data = $cart_obj['data'];
 		if (isset ($value['deposit'])) {
 			$price = $value['deposit'];
-			$value['data']->set_price( ($price) );
+			$value['data']->set_price( $price );
 		}
 		if (isset ($value['tour_cart_title'])) {
 			if (method_exists( $wc_product_data, 'set_name' ) ) {
