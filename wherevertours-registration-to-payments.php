@@ -95,10 +95,10 @@ function update_wc_cart_totals($cart_obj){
 			$price = $value['tour_deposit'];
 			$value['data']->set_price( $price );
 		}
-		if (isset ($value['tour_cart_title'])) {
+		/*if (isset ($value['tour_cart_title'])) {
 			$tour_cart_name = $value['tour_cart_title'];
 			$value['tour_cart_title']->set_name( $tour_cart_name );
-		}
+		}*/
 	}
 }
 add_action( 'woocommerce_before_calculate_totals', 'update_wc_cart_totals', 10, 1 );
