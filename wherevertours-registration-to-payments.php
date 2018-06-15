@@ -42,7 +42,7 @@ function process_tour_payment( $entry, $form ) {
 		//$unique_cart_item_key = md5( microtime() . rand() );
 		//$cart_item_data['unique_key'] = $unique_cart_item_key;
 		// Add Product To Cart
-		$woocommerce->cart->add_to_cart($product_id);
+		$woocommerce->cart->add_to_cart($product_id, $cart_item_data);
 	}
 	
 	// Loop Through Nested Entries
@@ -61,8 +61,8 @@ function process_tour_payment( $entry, $form ) {
 			}
 			
 			$cart_item_data = array(
-				'deposit'		=> $deposit,
-				'cart_title'	=> $generated_tour_cart_title
+				'tour_deposit'		=> $deposit,
+				'tour_cart_title'	=> $generated_tour_cart_title
 			);
 			
 			if(function_exists('wt_add_tour_to_cart')){
