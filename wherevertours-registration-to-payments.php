@@ -62,8 +62,8 @@ function process_tour_payment( $entry, $form ) {
 				'deposit'		=> $deposit,
 				'cart_title'	=> $generated_tour_cart_title
 			);
-			global $woocommerce;
-			$woocommerce->cart->add_to_cart($product_id, $cart_item_data);
+			//global $woocommerce;
+			//$woocommerce->cart->add_to_cart($product_id, $cart_item_data);
 		}
 		
 		elseif ($payment_option == 'custom_deposit'){
