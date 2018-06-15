@@ -55,9 +55,9 @@ function process_tour_payment( $entry, $form) {
 			if(function_exists(wt_create_registration_entry)){
 				wt_create_registration_entry($tour_registration_title, $wt_tour_registration_name, $deposit);
 			}
-			if(function_exists(wt_set_session_data_for_tour)){
+			/*if(function_exists(wt_set_session_data_for_tour)){
 				wt_set_session_data_for_tour($deposit, $generated_tour_cart_title);
-			}
+			}*/
 			$cart_item_data = array(
 				'deposit'		=> $deposit,
 				'cart_title'	=> $generated_tour_cart_title
@@ -65,7 +65,7 @@ function process_tour_payment( $entry, $form) {
 			$woocommerce->cart->add_to_cart($product_id, $cart_item_data);
 		}
 		
-		if ($payment_option == 'custom_deposit'){
+		elseif ($payment_option == 'custom_deposit'){
 			$deposit = rgar( $entry, '26');
 			if(function_exists(wt_create_registration_entry)){
 				wt_create_registration_entry($tour_registration_title, $wt_tour_registration_name, $deposit);
