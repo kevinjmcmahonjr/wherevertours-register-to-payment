@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 add_action( 'gform_after_submission_8', 'process_tour_payment', 10, 2 );
-function process_tour_payment( $entry, $form) {
+function process_tour_payment( $entry, $form ) {
 	// Variables for Woocommerce
 	global $woocommerce;
 	$product_id = 2906;
