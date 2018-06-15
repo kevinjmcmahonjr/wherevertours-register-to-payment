@@ -96,8 +96,8 @@ function update_wc_cart_totals($cart_obj){
 			$value['data']->set_price( $price );
 		}
 		if (isset ($value['tour_cart_title'])) {
-			$tour_cart_name = $value['tour_cart_name'];
-			$value['tour_cart_name']->set_name( $tour_cart_name );
+			$tour_cart_name = $value['tour_cart_title'];
+			$value['tour_cart_title']->set_name( $tour_cart_name );
 		}
 	}
 }
