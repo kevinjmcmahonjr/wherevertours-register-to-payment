@@ -19,7 +19,6 @@ function process_tour_payment( $entry, $form ) {
 	// Variables for Woocommerce
 	global $woocommerce;
 	$product_id = 2906;
-	$woocommerce->cart->add_to_cart($product_id);
 	// Variables from Form Data
 	$post = get_post( $entry['post_id']);
 	$gf_nested_entry_ids = explode( ',', $entry[1] );
@@ -37,6 +36,10 @@ function process_tour_payment( $entry, $form ) {
 		);
 	}
 	
+	function wt_add_tour_to_cart($product_id){
+		global woocommerce;
+		$woocommerce->cart->add_to_cart($product_id);
+	}
 	/*function wt_set_session_data_for_tour($deposit, $generated_tour_cart_title){
 		$_POST['wt_deposit_amount'] = $deposit;
 		$_POST['wt_tour_cart_title'] = $generated_tour_cart_title;
@@ -63,6 +66,10 @@ function process_tour_payment( $entry, $form ) {
 				'deposit'		=> $deposit,
 				'cart_title'	=> $generated_tour_cart_title
 			);
+			
+			if(function_exists('wt_add_tour_to_cart')){
+				wt_add_tour_to_cart($product_id);
+			}
 			//global $woocommerce;
 			//$woocommerce->cart->add_to_cart($product_id, $cart_item_data);
 		}
