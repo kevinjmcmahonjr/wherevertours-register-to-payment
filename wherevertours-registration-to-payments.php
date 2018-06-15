@@ -17,7 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 add_action( 'gform_after_submission_8', 'process_tour_payment', 10, 2 );
 function process_tour_payment( $entry, $form ) {
 	// Variables for Woocommerce
-	//global $woocommerce;
 	$product_id = 2906;
 	// Variables from Form Data
 	$post = get_post( $entry['post_id']);
@@ -43,12 +42,8 @@ function process_tour_payment( $entry, $form ) {
 		//$unique_cart_item_key = md5( microtime() . rand() );
 		//$cart_item_data['unique_key'] = $unique_cart_item_key;
 		// Add Product To Cart
-		$woocommerce->cart->add_to_cart($product_id, $cart_item_data);
+		$woocommerce->cart->add_to_cart($product_id);
 	}
-	/*function wt_set_session_data_for_tour($deposit, $generated_tour_cart_title){
-		$_POST['wt_deposit_amount'] = $deposit;
-		$_POST['wt_tour_cart_title'] = $generated_tour_cart_title;
-	}*/
 	
 	// Loop Through Nested Entries
 	foreach ( $gf_nested_entry_ids as $gf_current_nested_entry_id ){
@@ -64,9 +59,7 @@ function process_tour_payment( $entry, $form ) {
 			if(function_exists('wt_create_registration_entry')){
 				wt_create_registration_entry($tour_registration_title, $wt_tour_registration_name, $deposit);
 			}
-			/*if(function_exists(wt_set_session_data_for_tour)){
-				wt_set_session_data_for_tour($deposit, $generated_tour_cart_title);
-			}*/
+			
 			$cart_item_data = array(
 				'deposit'		=> $deposit,
 				'cart_title'	=> $generated_tour_cart_title
@@ -75,8 +68,6 @@ function process_tour_payment( $entry, $form ) {
 			if(function_exists('wt_add_tour_to_cart')){
 				wt_add_tour_to_cart($product_id, $cart_item_data);
 			}
-			//global $woocommerce;
-			//$woocommerce->cart->add_to_cart($product_id, $cart_item_data);
 		}
 		
 		elseif ($payment_option == 'custom_deposit'){
@@ -89,59 +80,14 @@ function process_tour_payment( $entry, $form ) {
 			}
 			$cart_item_data = array(
 				'deposit'		=> $deposit,
-				'cart_title'	=> $generated_tour_cart_title
+				'tour_cart_title'	=> $generated_tour_cart_title
 			);
-			$woocommerce->cart->add_to_cart($product_id, $cart_item_data);
-		}
-	}
-	
-	//$wt_tour_registration_name = rgar( $entry, '1.2' ) . rgar( $entry, '1.3' ) . rgar( $entry, '1.4' ) . rgar( $entry, '1.6' ) . rgar( $entry, '1.8' );
-	//$tour_registration_title =  rgar( $entry, '14' ) . ' - ' . $wt_tour_registration_name . ' - ' . date("h:i:sa");
-	//$tour_registration_title =  rgar( $entry, '22' ) . ' - ' . date("h:i:sa");
-	
-}
-
-/*function calculate_tour_payment($cart_item_data, $product_id, $variation_id){
-	if(isset($_POST['wt_deposit_amount'])){
-		$calculated_price = $_POST['wt_deposit_amount'];
-		$product = wc_get_product( $product_id );
-		$product_price = $product->get_price();
-		$cart_item_data['deposit'] = $product_price + $calculated_price;
-	}
-	
-	if(isset($_POST['wt_tour_cart_title'])){
-		$cart_item_data['tour_cart_title'] = $_POST['wt_tour_cart_title'];
-	}
-
-	return $cart_item_data;
-}
-add_filter ('woocommerce_add_cart_item_data', 'calculate_tour_payment', 10, 3 );*/
-
-// Gives WooCommerce Item A Unique Key
-/*function namespace_force_individual_cart_items( $cart_item_data, $product_id ) {
-	$unique_cart_item_key = md5( microtime() . rand() );
-	$cart_item_data['unique_key'] = $unique_cart_item_key;
-	return $cart_item_data;
-}
-add_filter( 'woocommerce_add_cart_item_data', 'namespace_force_individual_cart_items', 10, 2 );*/
-
-// Update WooCommerce Cart
-/*function update_wc_cart_totals($cart_obj) {
-	foreach( $cart_obj->get_cart() as $key=>$value ) {
-		$wc_product_data = $cart_obj['data'];
-		if (isset ($value['deposit'])) {
-			$price = $value['deposit'];
-			$value['data']->set_price( $price );
-		}
-		if (isset ($value['cart_title'])) {
-			if (method_exists( $wc_product_data, 'set_name' ) ) {
-				$tour_cart_name = $value['cart_name'];
-				$wc_product->set_name( $tour_cart_title );
+			if(function_exists('wt_add_tour_to_cart')){
+				wt_add_tour_to_cart($product_id, $cart_item_data);
 			}
 		}
 	}
 }
-add_action( 'woocommerce_before_calculate_totals', 'update_wc_cart_totals', 10, 1 );*/
 
 // Gets Tour Information and Populates Available Dates Into Gravity Form Fields
 function populate_tour_dates( $form ){
