@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 add_action( 'gform_after_submission_8', 'process_tour_payment', 10, 2 );
 function process_tour_payment( $entry, $form ) {
 	// Variables for Woocommerce
-	global $woocommerce;
+	//global $woocommerce;
 	$product_id = 2906;
 	// Variables from Form Data
 	$post = get_post( $entry['post_id']);
@@ -62,6 +62,7 @@ function process_tour_payment( $entry, $form ) {
 				'deposit'		=> $deposit,
 				'cart_title'	=> $generated_tour_cart_title
 			);
+			global $woocommerce;
 			$woocommerce->cart->add_to_cart($product_id, $cart_item_data);
 		}
 		
