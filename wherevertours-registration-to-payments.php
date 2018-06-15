@@ -47,7 +47,7 @@ function process_tour_payment( $entry, $form) {
 		// Get The Name
 		$wt_tour_registration_name = rgar( $current_nested_entry, '1' );
 		// Create the Product Title for Cart and Checkout
-		$generated_tour_cart_title = 'Tour Deposit For: ' . $tour_registration_title . ' - ' $wt_tour_registration_name;
+		$generated_tour_cart_title = 'Tour Deposit For: ' . $tour_registration_title . ' - ' . $wt_tour_registration_name;
 		
 		if ($payment_option == 'deposit'){
 			$deposit = get_field('required_deposit_usd', $post);
