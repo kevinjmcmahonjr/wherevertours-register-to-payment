@@ -121,6 +121,7 @@ function update_wc_cart_item_name($cart_object){
 		}
     }
 }
+add_filter( 'woocommerce_before_calculate_totals', 'update_wc_cart_item_name', 10, 1 );
 
 add_action('woocommerce_after_cart', 'dump_woocommerce_cart');
 function dump_woocommerce_cart() {
