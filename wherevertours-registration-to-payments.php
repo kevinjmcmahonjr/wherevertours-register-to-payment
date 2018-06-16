@@ -122,6 +122,12 @@ function update_wc_cart_item_name($cart_object){
     }
 }
 
+add_action('woocommerce_after_cart', 'dump_woocommerce_cart');
+function dump_woocommerce_cart() {
+    global $woocommerce;
+    echo '<pre>', var_dump($woocommerce->cart), '</pre>';
+}
+
 // Gets Tour Information and Populates Available Dates Into Gravity Form Fields
 function populate_tour_dates( $form ){
 	// Checks each form field
