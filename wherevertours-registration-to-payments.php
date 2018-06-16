@@ -108,7 +108,7 @@ function update_wc_cart_item_name($cart_object){
 		// Get an instance of the WC_Product object
         $wc_product = $cart_item['data'];
 		
-		if (isset($wc_product['tour_cart_title']){
+		if (isset($wc_product['tour_cart_title'])){
 			// Get the product name (WooCommerce versions 2.5.x to 3+)
 			$original_name = method_exists( $wc_product, 'get_name' ) ? $wc_product->get_name() : $wc_product->post->post_title;
 			// SET THE NEW NAME
