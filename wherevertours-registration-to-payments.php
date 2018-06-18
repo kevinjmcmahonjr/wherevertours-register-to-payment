@@ -35,6 +35,7 @@ function process_tour_payment( $entry, $form ) {
 		);
 	}
 	
+	// Add Each Tour Registrant to WooCommerce Cart
 	function wt_add_tour_to_cart($product_id, $cart_item_data){
 		// Get Woocommerce Global Variable
 		global $woocommerce;
@@ -47,10 +48,14 @@ function process_tour_payment( $entry, $form ) {
 	
 	// Loop Through Nested Entries
 	foreach ( $gf_nested_entry_ids as $gf_current_nested_entry_id ){
+		
 		// Get The Current Nested Entry's Form Data
 		$current_nested_entry = GFAPI::get_entry($gf_current_nested_entry_id);
+		
 		// Get The Name
-		$wt_tour_registration_name = rgar( $current_nested_entry, '1.2' ) . rgar( $current_nested_entry, '1.3' ) . rgar( $current_nested_entry, '1.4' ) . rgar( $current_nested_entry, '1.6' ) . rgar( $current_nested_entry, '1.8' );
+		$wt_tour_registration_name = rgar( $current_nested_entry, '1.2' ) . ' ' . rgar( $current_nested_entry, '1.3' ) . ' ' . rgar( $current_nested_entry, '1.4' ) . ' ' . rgar( $current_nested_entry, '1.6' ) . ' ' . rgar( $current_nested_entry, '1.8' );
+		$wt_tour_registration_name = trim($wt_tour_registration_name);
+		
 		// Create the Product Title for Cart and Checkout
 		$generated_tour_cart_title = 'Tour Deposit For: ' . $tour_registration_title . ' - ' . $wt_tour_registration_name;
 		
@@ -74,9 +79,6 @@ function process_tour_payment( $entry, $form ) {
 			$deposit = rgar( $entry, '26');
 			if(function_exists(wt_create_registration_entry)){
 				wt_create_registration_entry($tour_registration_title, $wt_tour_registration_name, $deposit);
-			}
-			if(function_exists(wt_set_session_data_for_tour)){
-				wt_set_session_data_for_tour($deposit, $generated_tour_cart_title);
 			}
 			$cart_item_data = array(
 				'deposit'		=> $deposit,
