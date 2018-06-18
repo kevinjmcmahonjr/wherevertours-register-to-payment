@@ -125,8 +125,9 @@ function update_wc_cart_item_name($cart_object){
 
 function dump_woocommerce_cart($cart_object) {
     foreach ($cart_object->get_cart() as $cart_item){
+		echo '<h1>Start Cart Item</h1>' . '<pre>', var_dump($cart_item), '</pre>';
 		$wc_product = $cart_item['data'];
-		echo '<pre>', var_dump($wc_product), '</pre>';
+		echo '<h1>Start Data</h1>' . '<pre>', var_dump($wc_product), '</pre>';
 	}
 }
 add_action('woocommerce_before_calculate_totals', 'dump_woocommerce_cart');
