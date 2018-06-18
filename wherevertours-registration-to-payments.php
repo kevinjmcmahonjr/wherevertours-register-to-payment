@@ -121,13 +121,16 @@ function update_wc_cart_item_name($cart_object){
 		}
     }
 }
-add_filter( 'woocommerce_before_calculate_totals', 'update_wc_cart_item_name', 10, 1 );
+//add_filter( 'woocommerce_before_calculate_totals', 'update_wc_cart_item_name', 10, 1 );
 
-add_action('woocommerce_after_cart', 'dump_woocommerce_cart');
-function dump_woocommerce_cart() {
-    global $woocommerce;
-    echo '<pre>', var_dump($woocommerce->cart), '</pre>';
+function dump_woocommerce_cart($cart_object) {
+    foreach ($cart_object->get_cart() as $cart_item){
+		$wc_product = $cart_item['data'];
+		echo '<pre>', var_dump($wc_product), '</pre>';
+	}
 }
+add_action('woocommerce_before_calculate_totals', 'dump_woocommerce_cart');
+
 
 // Gets Tour Information and Populates Available Dates Into Gravity Form Fields
 function populate_tour_dates( $form ){
