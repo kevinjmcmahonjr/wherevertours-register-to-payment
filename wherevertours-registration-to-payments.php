@@ -95,28 +95,20 @@ function update_wc_cart_totals($cart_obj){
 			$price = $value['tour_deposit'];
 			$value['data']->set_price( $price );
 		}
-		/*if (isset ($value['tour_cart_title'])) {
-			$tour_cart_name = $value['tour_cart_title'];
-			$value['tour_cart_title']->set_name( $tour_cart_name );
-		}*/
 	}
 }
 add_action( 'woocommerce_before_calculate_totals', 'update_wc_cart_totals', 10, 1 );
 
 function update_wc_cart_item_name($cart_object){
 	foreach ( $cart_object->get_cart() as $cart_item ) {
-		echo "Loop Ran";
 		if (isset($cart_item['tour_cart_title'])){
-			// Get the product name (WooCommerce versions 2.5.x to 3+)
-			// $original_name = method_exists( $cart_item['data'], 'get_name' ) ? $cart_item['data']->get_name() : cart_item['data']->post->post_title;
-			// SET THE NEW NAME
-			$new_name = $cart_item['tour_cart_title'];
-			echo '<pre>', var_dump($new_name), '</pre>';
+			// Get The New Name
+			$new_tour_name = $cart_item['tour_cart_title'];
 			// Set the new name (WooCommerce versions 2.5.x to 3+)
 			if( method_exists( $cart_item['data'], 'set_name' ) )
-				$cart_item['data']->set_name( $new_name );
+				$cart_item['data']->set_name( $new_tour_name );
 			else
-				$cart_item['data']->post->post_title = $new_name;
+				$cart_item['data']->post->post_title = $new_tour_name;
 		}
     }
 }
