@@ -128,6 +128,12 @@ function dump_woocommerce_cart($cart_object) {
 // Remove Links To Products In Cart
 add_filter('woocommerce_cart_item_permalink','__return_false');
 
+// Remove Quantity Field From Cart
+function wc_remove_quantity_field_from_cart( $return, $product ) {
+	if ( is_cart() ) return true;
+}
+add_filter( 'woocommerce_is_sold_individually', 'wc_remove_quantity_field_from_cart', 10, 2 );
+
 // Gets Tour Information and Populates Available Dates Into Gravity Form Fields
 function populate_tour_dates( $form ){
 	// Checks each form field
