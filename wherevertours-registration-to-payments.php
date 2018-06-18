@@ -125,6 +125,8 @@ function dump_woocommerce_cart($cart_object) {
 }
 //add_action('woocommerce_before_calculate_totals', 'dump_woocommerce_cart');
 
+// Remove Links To Products In Cart
+add_filter('woocommerce_cart_item_permalink','__return_false');
 
 // Gets Tour Information and Populates Available Dates Into Gravity Form Fields
 function populate_tour_dates( $form ){
