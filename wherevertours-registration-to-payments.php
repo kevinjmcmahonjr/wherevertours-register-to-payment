@@ -120,7 +120,7 @@ function update_wc_cart_item_name($cart_object){
 		}
     }
 }
-//add_filter( 'woocommerce_before_calculate_totals', 'update_wc_cart_item_name', 10, 1 );
+add_filter( 'woocommerce_before_calculate_totals', 'update_wc_cart_item_name', 10, 1 );
 
 function dump_woocommerce_cart($cart_object) {
     foreach ($cart_object->get_cart() as $cart_item){
