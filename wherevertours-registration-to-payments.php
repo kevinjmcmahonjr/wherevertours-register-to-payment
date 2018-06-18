@@ -105,19 +105,17 @@ add_action( 'woocommerce_before_calculate_totals', 'update_wc_cart_totals', 10, 
 
 function update_wc_cart_item_name($cart_object){
 	foreach ( $cart_object->get_cart() as $cart_item ) {
-		// Get an instance of the WC_Product object
-        $wc_product = $cart_item['data'];
 		
-		if (isset($wc_product['tour_cart_title'])){
+		if (isset($cart_item['tour_cart_title'])){
 			// Get the product name (WooCommerce versions 2.5.x to 3+)
-			$original_name = method_exists( $wc_product, 'get_name' ) ? $wc_product->get_name() : $wc_product->post->post_title;
+			// $original_name = method_exists( $cart_item['data'], 'get_name' ) ? $cart_item['data']->get_name() : cart_item['data']->post->post_title;
 			// SET THE NEW NAME
-			$new_name = $wc_product['tour_cart_title'];
+			$new_name = $cart_item['tour_cart_title'];
 			// Set the new name (WooCommerce versions 2.5.x to 3+)
-			if( method_exists( $wc_product, 'set_name' ) )
-				$wc_product->set_name( $new_name );
+			if( method_exists( $cart_item['data'], 'set_name' ) )
+				$cart_item['data']->set_name( $new_name );
 			else
-				$wc_product->post->post_title = $new_name;
+				$cart_item['data']->post->post_title = $new_name;
 		}
     }
 }
@@ -130,7 +128,7 @@ function dump_woocommerce_cart($cart_object) {
 		echo '<h1>Start Data</h1>' . '<pre>', var_dump($wc_product), '</pre>';
 	}
 }
-add_action('woocommerce_before_calculate_totals', 'dump_woocommerce_cart');
+//add_action('woocommerce_before_calculate_totals', 'dump_woocommerce_cart');
 
 
 // Gets Tour Information and Populates Available Dates Into Gravity Form Fields
