@@ -195,6 +195,15 @@ add_filter( 'gform_pre_validation_8', 'populate_available_room_numbers' );
 add_filter( 'gform_pre_submission_filter_8', 'populate_available_room_numbers' );
 //add_filter( 'gform_admin_pre_render_8', 'populate_available_room_numbers' );
 
+// Check is Room Map is enable and pre-populates field in form with result
+function populate_room_map_in_form( $value ) {
+	if (isset get_field('tour_room_map_status')){
+		$value = get_field('tour_room_map_status');
+	}
+	return $value;
+}
+add_filter( 'gform_field_value_tour_room_map_status', 'populate_room_map_in_form' );
+
 // Add Shortcode
 function gfapi_vardump_entry( $atts ) {
 
