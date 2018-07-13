@@ -189,7 +189,7 @@ function populate_available_room_numbers( $form ) {
 		$field->placeholder = "Select A Room Number";
 		
 		// Add manual room option
-		$tour_available_room_numbers[] = array( 'text' => 'Request Reserved Room', 'value' => 'manual_review' );
+		$tour_available_room_numbers[] = array( 'text' => 'Reserved Room', 'value' => 'manual_review' );
 		
 		// Set the field choices to the room number array
 		$field->choices = $tour_available_room_numbers;
