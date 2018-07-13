@@ -197,8 +197,9 @@ add_filter( 'gform_pre_submission_filter_8', 'populate_available_room_numbers' )
 
 // Check is Room Map is enable and pre-populates field in form with result
 function populate_room_map_in_form( $value ) {
-	if (isset get_field('tour_room_map_status')){
-		$value = get_field('tour_room_map_status');
+	$tour_room_map_status = get_field('attach_room_map');
+	if ($tour_room_map_status){
+		$value = $tour_room_map_status;
 	}
 	return $value;
 }
