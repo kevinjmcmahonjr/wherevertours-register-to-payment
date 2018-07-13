@@ -185,7 +185,13 @@ function populate_available_room_numbers( $form ) {
 				$tour_available_room_numbers[] = array( 'text' => get_sub_field('room_number'), 'value' => get_sub_field('room_number') );
 			endwhile;
 		endif;
+		// Add Dropdown place holder text
 		$field->placeholder = "Select A Room Number";
+		
+		// Add manual room option
+		$tour_available_room_numbers[] = array( 'text' => 'Request Reserved Room', 'value' => 'manual_review' );
+		
+		// Set the field choices to the room number array
 		$field->choices = $tour_available_room_numbers;
 	}
 	return $form;
