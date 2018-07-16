@@ -185,7 +185,13 @@ function populate_available_room_numbers( $form ) {
 				$tour_available_room_numbers[] = array( 'text' => get_sub_field('room_number'), 'value' => get_sub_field('room_number') );
 			endwhile;
 		endif;
+		// Add Dropdown place holder text
 		$field->placeholder = "Select A Room Number";
+		
+		// Add manual room option
+		$tour_available_room_numbers[] = array( 'text' => 'Reserved Room', 'value' => 'manual_review' );
+		
+		// Set the field choices to the room number array
 		$field->choices = $tour_available_room_numbers;
 	}
 	return $form;
@@ -194,6 +200,16 @@ add_filter( 'gform_pre_render_8', 'populate_available_room_numbers' );
 add_filter( 'gform_pre_validation_8', 'populate_available_room_numbers' );
 add_filter( 'gform_pre_submission_filter_8', 'populate_available_room_numbers' );
 //add_filter( 'gform_admin_pre_render_8', 'populate_available_room_numbers' );
+
+// Check is Room Map is enable and pre-populates field in form with result
+function populate_room_map_in_form( $value ) {
+	$tour_room_map_status = get_field('attach_room_map');
+	if ($tour_room_map_status){
+		$value = $tour_room_map_status;
+	}
+	return $value;
+}
+add_filter( 'gform_field_value_tour_room_map_status', 'populate_room_map_in_form' );
 
 // Add Shortcode
 function gfapi_vardump_entry( $atts ) {
