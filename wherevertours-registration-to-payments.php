@@ -227,4 +227,7 @@ function gfapi_vardump_entry( $atts ) {
 
 }
 add_shortcode( 'gfvardump', 'gfapi_vardump_entry' );
+
+// Disable Scrolling on Gravity Forms Confirmations and Page Updates
+add_filter( 'gform_confirmation_anchor', '__return_false' );
 ?>
