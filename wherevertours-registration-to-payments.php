@@ -77,7 +77,7 @@ function process_tour_payment( $entry, $form ) {
 		
 		elseif ($payment_option == 'custom_deposit'){
 			$deposit = rgar( $entry, '26');
-			if(function_exists(wt_create_registration_entry)){
+			if(function_exists('wt_create_registration_entry')){
 				wt_create_registration_entry($tour_registration_title, $wt_tour_registration_name, $deposit);
 			}
 			$cart_item_data = array(
