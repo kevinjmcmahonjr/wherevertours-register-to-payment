@@ -23,6 +23,12 @@ function process_tour_payment( $entry, $form ) {
 	$gf_nested_entry_ids = explode( ',', $entry[1] );
 	$tour_registration_title =  rgar( $entry, '22' );
 	$payment_option = rgar( $entry, '17');
+	/*if ($payment_option == 'deposit'){
+		$deposit = get_field('required_deposit_usd', $post);
+	}
+	if ($payment_option == 'custom_deposit'){
+		$deposit = rgar( $entry, '26');
+	}*/
 	
 	// Create Registration Post Function
 	function wt_create_registration_entry($tour_registration_title, $wt_tour_registration_name, $deposit){
@@ -81,7 +87,7 @@ function process_tour_payment( $entry, $form ) {
 				wt_create_registration_entry($tour_registration_title, $wt_tour_registration_name, $deposit);
 			}
 			$cart_item_data = array(
-				'deposit'		=> $deposit,
+				'tour_deposit'		=> $deposit,
 				'tour_cart_title'	=> $generated_tour_cart_title
 			);
 			if(function_exists('wt_add_tour_to_cart')){
